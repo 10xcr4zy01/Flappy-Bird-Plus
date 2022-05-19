@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
+    private SpriteRenderer _spriteRenderer;
     public float jumpForce = 2f;
     public float speed = 3f;
     public bool isMovingRight = true;
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         Freeze(true);
     }
 
@@ -35,10 +37,12 @@ public class Player : MonoBehaviour
         switch (isMovingRight)
         {
             case true:
-                _rigidbody2D.AddForce(Vector2.right * speed * Time.deltaTime, ForceMode2D.Impulse);
+                _rigidbody2D.AddForce(-Vector2.right * speed * Time.deltaTime, ForceMode2D.Impulse);
+                _spriteRenderer.flipX = true;
                 break;
             case false:
-                _rigidbody2D.AddForce(Vector2.right * speed * Time.deltaTime * -1, ForceMode2D.Impulse);
+                _rigidbody2D.AddForce(Vector2.right * speed * Time.deltaTime, ForceMode2D.Impulse);
+                _spriteRenderer.flipX = false;
                 break;
         }
     }
@@ -47,8 +51,9 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Wall")
         {
-            //KnockBack(isMovingRight);
+            KnockBack(isMovingRight);
             isMovingRight = !isMovingRight;
+            
         }            
     }
 
@@ -70,10 +75,10 @@ public class Player : MonoBehaviour
         switch (isMovingRight)
         {
             case true:
-                _rigidbody2D.AddForce(new Vector2(5,3), ForceMode2D.Impulse);
+                _rigidbody2D.AddForce(Vector2.one * 0.5f, ForceMode2D.Impulse);
                 break;
             case false:
-                _rigidbody2D.AddForce(new Vector2(-5,3), ForceMode2D.Impulse);
+                _rigidbody2D.AddForce(new Vector2(-1,1 ) * 0.5f, ForceMode2D.Impulse);
                 break;
         }
     }
@@ -81,6 +86,11 @@ public class Player : MonoBehaviour
     public void Freeze(bool isFreeze)
     {
         _rigidbody2D.bodyType = isFreeze ? RigidbodyType2D.Static : RigidbodyType2D.Dynamic;
+    }
+
+    public void SetDefaulPosition ()
+    {
+        transform.position = new Vector2(0, -1);
     }
 
 }

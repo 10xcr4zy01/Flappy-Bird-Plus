@@ -7,9 +7,10 @@ public class CountdownController : MonoBehaviour
 {
     public float countDownTime = 3f;
     public TextMeshProUGUI countDownText;
-    public void OnStart ()
+    public void OnStartCountDown ()
     {
         countDownText.gameObject.SetActive(true);
+        countDownTime = 3f;
         StartCoroutine(CountdownToStart());
     }
 
@@ -30,7 +31,6 @@ public class CountdownController : MonoBehaviour
         {
             GameController.I.ResumeGame();
             countDownText.gameObject.SetActive(false);
-
         }
 
         
