@@ -4,15 +4,20 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
-    public static GameController I = null;
+    [HideInInspector] public static GameController I = null;
 
     public GameObject[] map;
 
+    [Header("UI")]
     public GameObject loseGamePanel;
     public GameObject startGamePanel;
     public GameObject nextGamePanel;
+    public GameObject winPanel;
+
+    [Space]
     public Player player;
 
+    [Header("Game Info")]
     private int _currentLevel = 0;
     private int _collectedFruits = 0;
 
@@ -39,10 +44,13 @@ public class GameController : MonoBehaviour
         _collectedFruits = 0;
         PauseGame();
         player.SetDefaulPosition();
-        nextGamePanel.SetActive(true);
+        ChangeMap(_currentLevel);
 
         if (_currentLevel < 3)
-            ChangeMap(_currentLevel);
+        {
+            nextGamePanel.SetActive(true);
+        }    
+            
         else if (_currentLevel >= 3)
         {
             WinGame();
@@ -51,7 +59,8 @@ public class GameController : MonoBehaviour
 
     public void WinGame ()
     {
-
+        PauseGame();
+        winPanel.SetActive(true);
     }
     public void LoseGame()
     {
@@ -87,6 +96,11 @@ public class GameController : MonoBehaviour
                 map[0].SetActive(false);
                 map[1].SetActive(false);
                 map[2].SetActive(true);
+                break;
+            case 3:
+                map[0].SetActive(false);
+                map[1].SetActive(false);
+                map[2].SetActive(false);
                 break;
 
         }

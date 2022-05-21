@@ -25,10 +25,7 @@ public class Player : MonoBehaviour
             Jump();
     }
 
-    private void FixedUpdate()
-    {
-        Moving(isMovingRight);
-    }
+    private void FixedUpdate() => Moving(isMovingRight);
 
     private void Jump() => _rigidbody2D.velocity = Vector2.up * jumpForce;
 
@@ -53,7 +50,6 @@ public class Player : MonoBehaviour
         {
             KnockBack(isMovingRight);
             isMovingRight = !isMovingRight;
-            
         }            
     }
 
@@ -70,6 +66,7 @@ public class Player : MonoBehaviour
             GameController.I.LoseGame();
         }
     }
+
     private void KnockBack (bool isMovingRight)
     {
         switch (isMovingRight)
@@ -83,13 +80,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Freeze(bool isFreeze)
-    {
-        _rigidbody2D.bodyType = isFreeze ? RigidbodyType2D.Static : RigidbodyType2D.Dynamic;
-    }
+    public void Freeze(bool isFreeze) => _rigidbody2D.bodyType = isFreeze ? RigidbodyType2D.Static : RigidbodyType2D.Dynamic;
 
     public void SetDefaulPosition ()
     {
+        isMovingRight = false;
         transform.position = new Vector2(0, -1);
     }
 
